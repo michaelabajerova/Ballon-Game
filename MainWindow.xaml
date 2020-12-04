@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="Ballon Popping Game" Height="600" Width="450" ResizeMode="CanMinimize">
     <Canvas Name="MyCanvas" Focusable="True" MouseLeftButtonDown="PopBaloons" Background="White">
-        <Label FontSize="24" Name="scoreText" Content="Score : 0" FontWeight="ExtraBold" Grid.ColumnSpan="2" Canvas.Top="542" />
+        <Label FontSize="24" Name="scoreText" Content="Score : 0" FontWeight="ExtraBold" Grid.ColumnSpan="2" Canvas.Top="512" />
     </Canvas>
 </Window>
