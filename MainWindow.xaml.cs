@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Ballon_Game
 {
@@ -20,9 +21,65 @@ namespace Ballon_Game
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer gameTimer = new DispatcherTimer();
+        int speed = 3;
+        int interval = 90;
+        Random random = new Random();
+
+        List<Rectangle> itemRemover = new List<Rectangle>();
+        ImageBrush backgroundImage = new ImageBrush();
+        int ballonSkins;
+        int i;
+        int missedBalloons;
+        bool gameIsActive;
+        int score;
+
+        MediaPlayer player = new MediaPlayer();
+
+
         public MainWindow()
         {
             InitializeComponent();
+            gameTimer.Tick += GameEngine;
+            gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+
+            backgroundImage.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Asset/background-Image.jpg"));
+            MyCanvas.Background = backgroundImage;
+
+            RestartGame();
+
+        }
+        private void GameEngine(object sender, EventArgs e)
+        {
+            scoreText.Content = "Score: " + score;
+            interval -= 10;
+        }
+
+        private void PopBaloons(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+        private void StartGame()
+        {
+            gameTimer.Start();
+            missedBalloons = 0;
+            score = 0;
+            interval = 90;
+            gameIsActive = true;
+            speed = 3;
+        }
+        private void RestartGame()
+        {
+            foreach(var x in MyCanvas.Children.OfType<Rectangle>())
+            {
+                itemRemover.Add(x);
+            }
+            foreach(Rectangle y in itemRemover)
+            {
+                MyCanvas.Children.Remove(y);
+            }
+            itemRemover.Clear();
+            StartGame();
         }
     }
 }
